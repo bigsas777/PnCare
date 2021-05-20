@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:splashscreen/splashscreen.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 import 'package:pncare_app/autenticazione/sign_in.dart';
 import 'package:pncare_app/autenticazione/registrazione.dart';
@@ -28,13 +31,14 @@ class PnCare extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
-      /*
-      routes: <String, WidgetBuilder>{
-        '/landingpage': (BuildContext context) => PnCare(),
-        '/registrazione': (BuildContext context) => Register(),
-        '/homepage': (BuildContext context) => Home(),
-      }, */
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/immagini/splashScreen.gif'),
+        nextScreen: Home(),
+        splashIconSize: 700,
+        // splashTransition: SplashTransition.sizeTransition,
+        backgroundColor: Color(0xfff5e9be),
+        duration: 1000,
+      )
     );
   }
 }

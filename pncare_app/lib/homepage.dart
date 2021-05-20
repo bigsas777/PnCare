@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +9,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:math';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:pncare_app/riciclo.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:linkable/linkable.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -158,6 +162,156 @@ class _HomePageState extends State<HomePage> {
                   color: Color(0xff5e5e5e),
                 ),
                 /*
+                InkWell(
+                  child: Text('Visita il nostro sito!'),
+                  onTap: () => launch(''),
+                ),
+                InkWell(
+                  child: Text('Visita la nostra pagina Instagram!'),
+                  onTap: () => launch('https://www.instagram.com/pncareofficial/'),
+                ),
+                InkWell(
+                  child: Text('Visita la nostra pagina Facebook!'),
+                  onTap: () => launch('https://www.facebook.com/PnCare-106426984956480'),
+                ),
+                InkWell(
+                  child: Text('Visita il nostro canale YouTube!'),
+                  onTap: () => launch('https://www.youtube.com/channel/UC0GJT-tDh69q8dxVuRyPktw'),
+                ),
+                */
+                /*
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Visita la nostra pagina Instagram!',
+                            recognizer: TapGestureRecognizer()..onTap = () {launch('https://www.instagram.com/pncareofficial/');},
+                          ),
+                          TextSpan(
+                            text: 'Visita la nostra pagina Facebook!',
+                            recognizer: TapGestureRecognizer()..onTap = () {launch('https://www.facebook.com/PnCare-106426984956480');},
+                          ),
+                          TextSpan(
+                            text: 'Visita il nostro canale YouTube!',
+                            recognizer: TapGestureRecognizer()..onTap = () {launch('https://www.youtube.com/channel/UC0GJT-tDh69q8dxVuRyPktw');},
+                          ),
+                        ]
+                    ),
+                  ),
+                ) */
+                /*
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Card(
+                    elevation: 10,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      child: Row(
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Text(
+                                ' ',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                ' ',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                  color: Color(0xffE3131E),
+                                ),
+                              ),
+                              Text(
+                                ' ',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Image.asset('immagini/notiziaPn.jpeg'),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+                */
+                /*
+                RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(
+                              style: TextStyle(
+                                color: Color(0xffE3131E),
+                                fontSize: 15,
+                              ),
+                              text: "Visita la nostra pagina Facebook!\n",
+                              recognizer: TapGestureRecognizer()..onTap =  () async{
+                                var url = "https://www.facebook.com/PnCare-106426984956480";
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              }
+                          ),
+                          TextSpan(
+                              style: TextStyle(
+                                color: Color(0xffE3131E),
+                                fontSize: 15,
+                              ),
+                              text: "Visita la nostra pagina Instagram!\n",
+                              recognizer: TapGestureRecognizer()..onTap =  () async{
+                                var url = "https://www.instagram.com/pncareofficial/";
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              }
+                          ),
+                          TextSpan(
+                              style: TextStyle(
+                                color: Color(0xffE3131E),
+                                fontSize: 15,
+                              ),
+                              text: "Visita il nostro canale YouTube!",
+                              recognizer: TapGestureRecognizer()..onTap =  () async{
+                                var url = "https://www.youtube.com/channel/UC0GJT-tDh69q8dxVuRyPktw";
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              }
+                          ),
+                        ]
+                    )),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      primary: Colors.red
+                  ),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: IconButton(
+                      icon: ImageIcon(
+                        AssetImage('assets/icons/iconaTastoIG.png')
+                      ),
+                    )
+                  ),
+                  onPressed: () {},
+                )
+                */
+                /*
                 TextButton(onPressed: () {
                   testData();
                 },
@@ -208,11 +362,11 @@ class _HomePageState extends State<HomePage> {
 
     if (IQA < 30) {
       return 'Ottima';
-    } else if (IQA >= 34 && IQA <= 66) {
+    } else if (IQA >= 31 && IQA <= 66) {
       return 'Buona';
     } else if (IQA >= 67 && IQA <= 99) {
       return 'Discreta';
-    } else if (IQA >= 99 && IQA <= 150) {
+    } else if (IQA >= 100 && IQA <= 150) {
       return 'Scadente';
     } else if (IQA > 150) {
       return 'Pessima';
