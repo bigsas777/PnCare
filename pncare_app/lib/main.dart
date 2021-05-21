@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-
-import 'package:pncare_app/autenticazione/sign_in.dart';
-import 'package:pncare_app/autenticazione/registrazione.dart';
 import 'package:pncare_app/home.dart';
 
 void main() async {

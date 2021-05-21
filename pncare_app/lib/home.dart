@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pncare_app/pn_accessibile.dart';
-// import 'file non usati/main_drawer.dart';
 import 'homepage.dart';
 import 'pnp_page.dart';
 import 'riciclo.dart';
@@ -24,32 +23,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* appBar: AppBar(
-        backgroundColor: Color(0xffE3131E),
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Builder(
-                  builder: (context) => IconButton(
-                      icon: Icon(Icons.menu_rounded),
-                      iconSize: 32,
-                      // color: Color(0xffF5E9BE),
-                      onPressed: () => Scaffold.of(context).openDrawer())),
-            ),
-            Text(
-              'PnCare',
-              style: TextStyle(
-                fontFamily: 'Cocogoose Pro', /*color: Color(0xffF5E9BE)*/
-              ),
-            )
-          ],
-        ),
-        titleSpacing: 0,
-      ), */
-      // drawer: MenuLaterale(),
-      // Colore schermate
       body: <Widget>[
         HomePage(),
         PnPPage(),
@@ -57,19 +30,12 @@ class _HomeState extends State<Home> {
         PnAccessibile()
       ][currentIndex],
       bottomNavigationBar: BubbleBottomBar(
-        //backgroundColor: Color(0xffEF3A44),
         opacity: .2,
         currentIndex: currentIndex,
         onTap: ChangePage,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         elevation: 8,
-        hasNotch: true, //new
-
-        // ATTRIBUTI NON RICHIESTI
-        // fabLocation: BubbleBottomBarFabLocation.end, //new
-        // hasInk: true //new, gives a cute ink effect
-        // inkColor: Colors.black12 //optional, uses theme color if not specified
-
+        hasNotch: true,
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
               backgroundColor: Colors.white,
@@ -115,8 +81,7 @@ class _HomeState extends State<Home> {
                 Icons.delete_outlined,
                 color: Color(0xffE3131E),
               ),
-              title: Text(
-                  "PnRiciclo",
+              title: Text("PnRiciclo",
                   style: TextStyle(
                       fontFamily: 'Cocogoose Pro', color: Color(0xffE3131E)))),
           BubbleBottomBarItem(
@@ -129,8 +94,7 @@ class _HomeState extends State<Home> {
                 Icons.accessible_forward,
                 color: Color(0xffE3131E),
               ),
-              title: Text(
-                  "Pn x Tutti",
+              title: Text("Pn x Tutti",
                   style: TextStyle(
                       fontFamily: 'Cocogoose Pro', color: Color(0xffE3131E))))
         ],

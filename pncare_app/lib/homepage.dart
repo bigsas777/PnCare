@@ -1,6 +1,4 @@
 import 'dart:ui';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       llo3 = 180,
       llno2 = 200,
       llso2 = 350;
-  
+
   Future richiestaMeteo() async {
     final response = await http.get(Uri.parse(
         "https://api.weatherapi.com/v1/current.json?key=3cd479d446704f4ba47143505210205&q=Pordenone&aqi=yes&lang=it"));
@@ -65,7 +63,6 @@ class _HomePageState extends State<HomePage> {
                     child: Text('PnBacheca',
                         style: TextStyle(
                             fontFamily: 'Cocogoose Pro',
-                            // fontWeight: FontWeight.bold,
                             fontSize: 35,
                             color: Color(0xffE3131E))),
                   ),
@@ -81,7 +78,6 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2,
                       height: MediaQuery.of(context).size.height / 5,
-                      // color: Colors.red,
                       child: Column(
                         children: <Widget>[
                           Padding(
@@ -106,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                     Container(
                         width: MediaQuery.of(context).size.width / 2,
                         height: MediaQuery.of(context).size.height / 5,
-                        // color: Colors.amber,
                         child: Padding(
                           padding: EdgeInsets.only(top: 20),
                           child: Column(
@@ -157,15 +152,6 @@ class _HomePageState extends State<HomePage> {
                   endIndent: 15,
                   color: Color(0xff5e5e5e),
                 ),
-                /*
-                TextButton(onPressed: () {
-                  testData();
-                },
-                  child: Text('Cliccami!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xffE3131E))
-                  ),
-                ) */
               ],
             ))
           ];
@@ -224,7 +210,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> testDatabase() async {
-    final todo = ParseObject('Test')..set('message', "sas")..set('data', DateTime.now());
+    final todo = ParseObject('Test')
+      ..set('message', "sas")
+      ..set('data', DateTime.now());
     await todo.save();
   }
 }

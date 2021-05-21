@@ -27,16 +27,13 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   http: ^0.13.2
   xml2json: ^5.1.0
-  firebase_auth: ^1.1.3
-  cloud_firestore: ^2.0.0
-  firebase_core: ^1.1.1
-  firebase_database: ^6.1.2
   html: ^0.15.0
   parse_server_sdk_flutter: ^3.0.0
   google_maps_flutter: ^2.0.4
   animated_splash_screen: ^1.1.0
   splashscreen: ^1.3.5
   image_picker: ^0.7.5+2
+  flutter_launcher_icons: ^0.9.0
 
   flutter:
     sdk: flutter
@@ -101,3 +98,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+    android: true
+    ios: true
+    image_path: "assets/icons/icona_app.png"

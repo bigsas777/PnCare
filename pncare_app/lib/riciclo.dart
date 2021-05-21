@@ -7,7 +7,6 @@ class RiciclabolarioPage extends StatefulWidget {
 }
 
 class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
-
   /*
   var rifiuto = ['contenitore tetrapack', 'accendino', 'televisore', 'cassetta di legno', 'trucchi', 'cartuccia toner'];
   var dove = ['raccolta carta', 'secco residuo', 'RAEE, ecocentro', 'verde', 'secco residuo', 'ecocentro, contenitore in negozio'];
@@ -56,15 +55,14 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
           ),
           // Barra di ricerca
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
                   labelText: 'Cerca un rifiuto',
                   prefixIcon: Icon(Icons.search),
-              ),
-            )
-          ),
+                ),
+              )),
           // Linea divisoria tra barra di ricerca e lista di rifiuti
           Padding(
             padding: EdgeInsets.only(top: 20),
@@ -99,17 +97,21 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
                               padding: EdgeInsets.only(top: 20),
                               itemCount: snapshot.data.length,
                               itemBuilder: (context, index) {
-
                                 // Richiesta valori per ogni rifiuto
                                 final rifiuto = snapshot.data[index];
                                 final nomeRifiuto = rifiuto.get<String>('Nome');
-                                final doveButtare =  rifiuto.get<String>('DoveButtare');
-                                final tipoRifiuto = rifiuto.get<String>('TipologiaRifiuto');
+                                final doveButtare =
+                                    rifiuto.get<String>('DoveButtare');
+                                final tipoRifiuto =
+                                    rifiuto.get<String>('TipologiaRifiuto');
 
                                 return ListTile(
                                   title: Text(nomeRifiuto),
                                   leading: Icon(Icons.delete),
-                                  subtitle: Text('Tipo: ' + tipoRifiuto + '\nDove lo butto: ' + doveButtare),
+                                  subtitle: Text('Tipo: ' +
+                                      tipoRifiuto +
+                                      '\nDove lo butto: ' +
+                                      doveButtare),
                                 );
                               });
                         }
@@ -122,11 +124,10 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
 
   Future<List<ParseObject>> richiestaRifiuti() async {
     QueryBuilder<ParseObject> queryRifiuti =
-    QueryBuilder<ParseObject>(ParseObject('Rifiuti'));
+        QueryBuilder<ParseObject>(ParseObject('Rifiuti'));
     final ParseResponse apiResponse = await queryRifiuti.query();
 
     if (apiResponse.success && apiResponse.results != null) {
-      // print(apiResponse.results);
       listaRifiuti = apiResponse.results;
       return apiResponse.results;
     } else {
@@ -135,30 +136,13 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
   }
 
   void puliziaLista() {
-    for (int i = 0; i < listaRifiuti.length; i++)
-      {
-        listaRifiuti[i].remove("className");
-        listaRifiuti[i].remove("objectId");
-        listaRifiuti[i].remove("createdAt");
-        listaRifiuti[i].remove("updatedAt");
-        listaRifiuti[i].remove("DoveButtare");
-        listaRifiuti[i].remove("TipologiaRifiuto");
-      }
+    for (int i = 0; i < listaRifiuti.length; i++) {
+      listaRifiuti[i].remove("className");
+      listaRifiuti[i].remove("objectId");
+      listaRifiuti[i].remove("createdAt");
+      listaRifiuti[i].remove("updatedAt");
+      listaRifiuti[i].remove("DoveButtare");
+      listaRifiuti[i].remove("TipologiaRifiuto");
+    }
   }
-
-
-  /*
-  void inviaRichiestaRifiuti() async {
-    for(int i = 0; i < rifiuto.length; i++)
-      {
-        await salvaRifiuti(rifiuto[i], dove[i]);
-      }
-  }
-
-  Future<void> salvaRifiuti(rifiuto, dove) async {
-    final nuovoRifiuto = ParseObject('Rifiuti')..set('Nome', rifiuto)..set('DoveButtare', dove);
-    await nuovoRifiuto.save();
-  }
-  */
 }
-
