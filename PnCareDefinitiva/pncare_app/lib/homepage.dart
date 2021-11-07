@@ -1,11 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:math';
+import 'dart:async';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:pncare_app/class_notizia.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,11 +17,15 @@ class _HomePageState extends State<HomePage> {
   var meteoAttuale, temperatura, iconaMeteo, pm2_5, pm10, o3, no2, so2;
   // ll sta per limite di legge per ogni parametro
   // pm sono insiemi di polveri inquinanti, il numero sta per il diametro delle polveri
-  final llpm2_5 = 25, // microgrammi per metro cubo
-      llpm10 = 50,
-      llo3 = 180,
-      llno2 = 200,
-      llso2 = 350;
+
+  final llpm2_5 = 25, // valore espresso in microgrammi per metro cubo
+        llpm10 = 50,
+        llo3 = 180,
+        llno2 = 200,
+        llso2 = 350;
+
+  List<Notizia> notizie = [];
+  Notizia notizia;
 
   Future richiestaMeteo() async {
     final response = await http.get(Uri.parse(
@@ -42,121 +47,187 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+  Future _richiestaNotizie() async {
+    final data = await http.get(Uri.parse("https://dfcf-94-36-171-133.ngrok.io/"));
+
+    var jsonData = json.decode(data.body);
+
+    setState(() {
+      for (var u in jsonData) {
+        this.notizia = Notizia(u["Indice"], u["Titolo"], u["Descrizone"], u["Data"], u["Immagine"], u["Link"]);
+        this.notizie.add(notizia);
+      }
+    });
+  }
+
+
+
   @override
   void initState() {
     super.initState();
     this.richiestaMeteo();
+    this._richiestaNotizie();
   }
 
+  // Corpo principale della homepage
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-        headerSliverBuilder: (context, value) {
-          return [
-            SliverToBoxAdapter(
-                child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text('PnBacheca',
-                        style: TextStyle(
-                            fontFamily: 'Cocogoose Pro',
-                            fontSize: 35,
-                            color: Color(0xffE3131E))),
-                  ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+
+            // --- SEZIONE TITOLO ---
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('PnBacheca',
+                    style: TextStyle(
+                        fontFamily: 'Cocogoose Pro',
+                        fontSize: 35,
+                        color: Color(0xffE3131E)
+                    )
                 ),
-                Divider(
-                  thickness: 2,
-                  indent: 15,
-                  endIndent: 15,
-                  color: Color(0xff5e5e5e),
+              ),
+            ),
+
+            // --- SEZIONE CONDIZIONI METEO ---
+            Padding(
+              padding: EdgeInsets.only(top: 10, left: 10),
+              child: Align(
+                child: Text(
+                    "MeteoPn",
+                    style: GoogleFonts.poppins(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffE3131E),
+                    )
                 ),
-                Row(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.height / 5,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: Image(
-                              image: NetworkImage(FormatoIconaMeteo()),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              meteoAttuale != null
-                                  ? meteoAttuale.toString()
-                                  : '--',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ],
-                      ),
+                alignment: Alignment.centerLeft,
+              )
+            ),
+            Container(
+                child: Card(
+                    margin: EdgeInsets.all(5),
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)
                     ),
-                    Container(
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.height / 5,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 20),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2 - 5,
+                          height: MediaQuery.of(context).size.height / 5,
                           child: Column(
                             children: <Widget>[
-                              Align(
-                                child: Text(
-                                  temperatura != null
-                                      ? temperatura.toString() + " \u2103"
-                                      : "--" + "\u2103",
-                                  style: TextStyle(
-                                    fontSize: 40,
-                                  ),
-                                ),
-                                alignment: Alignment.topCenter,
+                              Image.network(
+                                FormatoIconaMeteo(),
+                                fit: BoxFit.cover,
+                                width: 100,
+                                height: 100,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Align(
-                                  child: Text(
-                                    "Qualità dell'aria:",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  alignment: Alignment.center,
+                              Text(
+                                meteoAttuale != null
+                                    ? meteoAttuale.toString()
+                                    : '--',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Align(
-                                  child: Text(
-                                    EsitoQA().toString(),
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  alignment: Alignment.bottomCenter,
-                                ),
-                              )
                             ],
                           ),
-                        ))
-                  ],
-                ),
-                Divider(
-                  thickness: 2,
-                  indent: 15,
-                  endIndent: 15,
-                  color: Color(0xff5e5e5e),
-                ),
-              ],
-            ))
-          ];
-        },
-        body: Container());
+                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width / 2 - 5,
+                            height: MediaQuery.of(context).size.height / 5,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    temperatura != null ? temperatura.toString() + " \u2103" : "--" + " \u2103",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Qualità dell'aria:",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Text(
+                                    EsitoQA().toString(),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ))
+                      ],
+                    )
+                )
+            ),
+
+            // --- SEZIONE NOTIZIE ---
+            Padding(
+                padding: EdgeInsets.only(top: 10, left: 10),
+                child: Align(
+                  child: Text(
+                      "NotiziePn ",
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xffE3131E),
+                      )
+                  ),
+                  alignment: Alignment.centerLeft,
+                )
+            ),
+            Column(
+              children: notizie.map((notizia){
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)
+                  ),
+                  elevation: 10.0,
+                  child: ListTile(
+                    isThreeLine: true,
+                    title: Text(
+                      notizia.titolo,
+                      style: TextStyle(
+                        color: Color(0xff174c4f),
+                        fontSize: 21,
+                      ),
+                    ),
+                    subtitle: Text(
+                      notizia.data,
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
+                    trailing: Image.network(notizia.immagine),
+                    onTap: () async {
+                      print(notizia.link);
+                      await launch(notizia.link, forceWebView: true);
+                    },
+                  ),
+                  margin: EdgeInsets.all(5),
+                );
+              }).toList(),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   String FormatoIconaMeteo() {
