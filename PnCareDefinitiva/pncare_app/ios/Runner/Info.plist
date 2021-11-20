@@ -40,6 +40,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Inserisci l'immagine della tua segnalazione</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Scatta una foto per arricchire la tua segnalazione</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Audio video segnalazioni</string>
 	<false/>
 </dict>
 </plist>

@@ -9,9 +9,9 @@ class PnPPage extends StatefulWidget {
 }
 
 class _PnPPage extends State<PnPPage> {
-  String testo = "In questa sezione dell'app potrai condividere in modo semplice, con il "
-      "comune di Pordenone, delle segnalazioni riguardanti problemi riscontrati sul territorio del comune"
-      " oppure inviare i tuoi pensieri o dei consigli riguardo l'operato del comune.";
+  String testo = "In questa sezione dell'app potrai segnalare, al "
+      "comune di Pordenone, problemi riscontrati sul territorio"
+      " oppure inviare i tuoi pensieri o consigli riguardo l'operato del comune.";
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _PnPPage extends State<PnPPage> {
             padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Text('PnSegnalazioni',
+              child: Text('PnRiscontri',
                 style: TextStyle(
                     fontFamily: 'Cocogoose Pro',
                     fontSize: 35,

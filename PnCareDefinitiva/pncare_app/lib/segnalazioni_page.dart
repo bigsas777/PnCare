@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,6 +11,7 @@ class SegnalazioniPage extends StatefulWidget {
 }
 
 // TODO: Image picker e salvataggio immagini nel database
+// https://educity.app/flutter/how-to-pick-an-image-from-gallery-and-display-it-in-flutter --> ImagePicker
 
 class _SegnalazioniPage extends State<SegnalazioniPage> {
   String titolo = '', descrizione = '';
@@ -72,41 +76,60 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
                           fontSize: 20
                       )),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: ElevatedButton.icon(
+                    icon: Icon(
+                      Icons.camera_alt,
+                      color: Color(0xffE3131E),
+                    ),
+                    label: Text(
+                      'Inserisci una fotografia',
+                      style: GoogleFonts.poppins(
+                        color: Color(0xffE3131E),
+                      ),
+                    ),
+                    onPressed: () {
+                      imgDaGalleria();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        side: BorderSide(color: Color(0xffE3131E))
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 15),
-            child: Container(
-              height: 50.0,
-              margin: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  inviaSegnalazione();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffE3131E), Color(0xffE3131E)],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                      borderRadius: BorderRadius.circular(30.0)),
-                  child: Container(
-                    constraints:
-                    BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Invia segnalazione",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        fontSize: 19,
-                        // fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+          Container(
+            height: 50.0,
+            margin: EdgeInsets.all(10),
+            child: RaisedButton(
+              onPressed: () {
+                inviaSegnalazione();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0)),
+              padding: EdgeInsets.all(0.0),
+              child: Ink(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xffE3131E), Color(0xffE3131E)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(30.0)),
+                child: Container(
+                  constraints:
+                  BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Invia segnalazione",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 19,
+                      // fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -116,6 +139,18 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
         ],
       ),
     );
+  }
+
+  imgDaGalleria() async {
+    PickedFile fileScelto = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+
+    if (fileScelto != null) {
+      File immagine = File(fileScelto.path);
+    }
   }
 
   void inviaSegnalazione() async {
