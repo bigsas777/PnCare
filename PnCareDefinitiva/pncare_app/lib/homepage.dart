@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
 
   Future _richiestaNotizie() async {
-    final data = await http.get(Uri.parse("https://dfcf-94-36-171-133.ngrok.io/"));
+    final data = await http.get(Uri.parse("https://8b73-78-14-16-126.ngrok.io/"));
 
     var jsonData = json.decode(data.body);
 
@@ -109,17 +109,15 @@ class _HomePageState extends State<HomePage> {
               )
             ),
             Container(
-                child: Card(
+                /* child: Card(
                     margin: EdgeInsets.all(5),
                     elevation: 10,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)
-                    ),
+                    ), */
                     child: Row(
                       children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2 - 5,
-                          height: MediaQuery.of(context).size.height / 5,
+                        Expanded(
                           child: Column(
                             children: <Widget>[
                               Image.network(
@@ -134,16 +132,14 @@ class _HomePageState extends State<HomePage> {
                                     : '--',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.poppins(
-                                  fontSize: 25,
+                                  fontSize: 23,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                            width: MediaQuery.of(context).size.width / 2 - 5,
-                            height: MediaQuery.of(context).size.height / 5,
+                        Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(top: 20),
                               child: Column(
@@ -165,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     EsitoQA().toString(),
                                     style: GoogleFonts.poppins(
-                                      fontSize: 25,
+                                      fontSize: 23,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -174,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                             ))
                       ],
                     )
-                )
+                // )
             ),
 
             // --- SEZIONE NOTIZIE ---

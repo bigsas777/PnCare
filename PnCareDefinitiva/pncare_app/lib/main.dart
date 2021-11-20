@@ -4,6 +4,8 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:pncare_app/home.dart';
 
+// TODO: Implementazione firebase
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -14,7 +16,7 @@ void main() async {
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, debug: true);
 
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]); // Forse è inutile
   runApp(PnCare());
 }
 

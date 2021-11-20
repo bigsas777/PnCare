@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:pncare_app/segnalazioni_page.dart';
+import 'package:pncare_app/pensieri_page.dart';
 
 class PnPPage extends StatefulWidget {
   @override
@@ -7,7 +9,9 @@ class PnPPage extends StatefulWidget {
 }
 
 class _PnPPage extends State<PnPPage> {
-  String titolo = '', descrizione = '';
+  String testo = "In questa sezione dell'app potrai condividere in modo semplice, con il "
+      "comune di Pordenone, delle segnalazioni riguardanti problemi riscontrati sul territorio del comune"
+      " oppure inviare i tuoi pensieri o dei consigli riguardo l'operato del comune.";
 
   @override
   Widget build(BuildContext context) {
@@ -19,94 +23,103 @@ class _PnPPage extends State<PnPPage> {
             child: Align(
               alignment: Alignment.centerRight,
               child: Text('PnSegnalazioni',
-                  style: TextStyle(
-                      fontFamily: 'Cocogoose Pro',
-                      fontSize: 35,
-                      color: Color(0xffE3131E))),
+                style: TextStyle(
+                    fontFamily: 'Cocogoose Pro',
+                    fontSize: 35,
+                    color: Color(0xffE3131E)
+                ),
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: <Widget>[
-                // Titolo problema
-                TextField(
-                  onChanged: (titoloProb) {
-                    titolo = titoloProb;
-                  },
-                  autocorrect: true,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(
-                      labelText: "Titolo segnalazione",
-                      labelStyle: TextStyle(color: Color(0xffE3131E))),
-                ),
-                // Descrizione problema
-                TextField(
-                  onChanged: (descrProb) {
-                    descrizione = descrProb;
-                  },
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  autocorrect: true,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: InputDecoration(
-                      labelText: "Descrizione segnalazione",
-                      labelStyle: TextStyle(color: Color(0xffE3131E))),
-                ),
-              ],
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              testo,
+              style: GoogleFonts.poppins(
+                color: Color(0xff174c4f),
+                fontSize: 19,
+                fontWeight: FontWeight.w600,
+
+              ),
+              textAlign: TextAlign.left,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 15),
+            padding: EdgeInsets.only(top: 10),
+            child: Container(
+              height: 50.0,
+              margin: EdgeInsets.all(10),
+              child: RaisedButton(
+                color: Color(0xffE3131E),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SegnalazioniPage()));
+                },
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80.0)),
+                padding: EdgeInsets.all(0.0),
+                // Questo pezzo di codice permette di colorare il bottone con un gradiente
+                /* child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xffE3131E), Color(0xffE3131E)],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.circular(30.0)), */
+                child: Container(
+                  constraints:
+                  BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Invia segnalazione",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 19,
+                      color: Colors.white,
+                    ),
+                  ),
+                ), /*
+                ), */
+              ),
+            ),
+          ),
+          Container(
+            height: 50.0,
+            margin: EdgeInsets.all(10),
             child: RaisedButton(
               color: Color(0xffE3131E),
-              textColor: Colors.white,
-              child: Text('Invia segnalazione'),
               onPressed: () {
-                inviaSegnalazione();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PensieriPage()));
               },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0)),
+              padding: EdgeInsets.all(0.0),
+              /* child: Ink(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xffE3131E), Color(0xffE3131E)],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    borderRadius: BorderRadius.circular(30.0)), */
+              child: Container(
+                constraints:
+                BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+                alignment: Alignment.center,
+                child: Text(
+                  "Invia pensiero",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 19,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              // ),
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-
-  void inviaSegnalazione() async {
-    if (titolo.trim().isEmpty || descrizione.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          "Dati inseriti non validi!",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Color(0xff174c4f),
-        duration: Duration(seconds: 2),
-      ));
-      return;
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        "Segnalazione inviata con successo!",
-        style: TextStyle(color: Colors.white),
-      ),
-      backgroundColor: Color(0xff174c4f),
-      duration: Duration(seconds: 2),
-    ));
-
-    await salvaSegnalazione();
-
-    setState(() {
-      titolo = '';
-      descrizione = '';
-    });
-  }
-
-  Future<void> salvaSegnalazione() async {
-    final nuovaSegnalazione = ParseObject('Segnalazioni')
-      ..set('Titolo', titolo)
-      ..set('Descrizione', descrizione)
-      ..set('Risolta', false);
-    await nuovaSegnalazione.save();
   }
 }
