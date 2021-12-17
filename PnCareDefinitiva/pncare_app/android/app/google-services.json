@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "966431323327",
-    "project_id": "pncare-71ff8",
-    "storage_bucket": "pncare-71ff8.appspot.com"
+    "project_number": "213660293935",
+    "project_id": "pncare-676e4",
+    "storage_bucket": "pncare-676e4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:966431323327:android:62acc3cb266460132c020a",
+        "mobilesdk_app_id": "1:213660293935:android:3dc636a8c119cbfbf39fda",
         "android_client_info": {
           "package_name": "pncare.pncare_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "966431323327-g8cfi550hthtqmr715vqlofdb8fcpqqt.apps.googleusercontent.com",
+          "client_id": "213660293935-iime70oq26bmji7qhce5g07n71otnpo9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pncare.pncare_app",
+            "certificate_hash": "7f530814d2780d0515e1b9db04317561f98d89b7"
+          }
+        },
+        {
+          "client_id": "213660293935-th89879u5bbn7k2jqqsidh39ck3kjjsf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChqz__kgaaSLyF1ZbOIU5HofiYMGFBl2Q"
+          "current_key": "AIzaSyD4_Fe2uvcdqTBLvFFqeO3y5yBfiEjiszQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "966431323327-g8cfi550hthtqmr715vqlofdb8fcpqqt.apps.googleusercontent.com",
+              "client_id": "213660293935-th89879u5bbn7k2jqqsidh39ck3kjjsf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

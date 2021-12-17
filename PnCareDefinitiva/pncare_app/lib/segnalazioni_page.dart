@@ -19,29 +19,26 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffE3131E),
+        elevation: 0.0,
+        title: Text(
+          'Indietro',
+          style: GoogleFonts.poppins(
+              fontSize: 22,
+              color: Colors.white,
+              fontWeight: FontWeight.w600
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Column(
         children: [
-          Container(
-            color: Color(0xffE3131E),
-            child: Row(
-              children: [
-                BackButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Text(
-                  'Indietro',
-                  style: GoogleFonts.poppins(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600
-                  ),
-                )
-              ],
-            )
-          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
@@ -54,7 +51,7 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
                   autocorrect: true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                      labelText: "Titolo segnalazione",
+                      labelText: "Titolo segnalazione*",
                       labelStyle: GoogleFonts.poppins(
                           color: Color(0xffE3131E),
                           fontSize: 20
@@ -70,14 +67,14 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
                   autocorrect: true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                      labelText: "Descrizione segnalazione",
+                      labelText: "Descrizione segnalazione*",
                       labelStyle: GoogleFonts.poppins(
                           color: Color(0xffE3131E),
                           fontSize: 20
                       )),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(top: 15, bottom: 25),
                   child: ElevatedButton.icon(
                     icon: Icon(
                       Icons.camera_alt,
@@ -90,7 +87,7 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
                       ),
                     ),
                     onPressed: () {
-                      imgDaGalleria();
+                      selezioneImg();
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Colors.white,
@@ -136,13 +133,92 @@ class _SegnalazioniPage extends State<SegnalazioniPage> {
               ),
             ),
           ),
+          Text(
+            'Campi obbligatori*',
+            style: GoogleFonts.poppins(
+              color: Color(0xffE3131E),
+              fontSize: 13,
+            ),
+          )
         ],
       ),
     );
   }
 
+  selezioneImg() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Seleziona immagine da:'),
+            content: SingleChildScrollView(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 40),
+                    child: Column(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.camera_alt,
+                            color: Color(0xffE3131E),
+                          ),
+                          iconSize: 60,
+                        ),
+                        Text(
+                            'Fotocamera',
+                            style: GoogleFonts.poppins(
+                              color: Colors.black,
+                            )
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.image_outlined,
+                          color: Color(0xffE3131E),
+                        ),
+                        iconSize: 60,
+                      ),
+                      Text(
+                        'Galleria',
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: Text(
+                  'ANNULLA',
+                  style: GoogleFonts.poppins(
+                    color: Color(0xffE3131E)
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Color(0x8AD28588)),
+                ),
+              ),
+            ],
+          );
+        }
+    );
+  }
+
   imgDaGalleria() async {
-    PickedFile fileScelto = await ImagePicker().getImage(
+    XFile fileScelto = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,

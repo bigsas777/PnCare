@@ -13,29 +13,26 @@ class _PensieriPage extends State<PensieriPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffE3131E),
+        elevation: 0.0,
+        title: Text(
+          'Indietro',
+          style: GoogleFonts.poppins(
+              fontSize: 22,
+              color: Colors.white,
+              fontWeight: FontWeight.w600
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Column(
         children: [
-          Container(
-              color: Color(0xffE3131E),
-              child: Row(
-                children: [
-                  BackButton(
-                    color: Colors.white,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Text(
-                    'Indietro',
-                    style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600
-                    ),
-                  )
-                ],
-              )
-          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:pncare_app/class_notizia.dart';
+import 'package:pncare_app/models/notizia_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         llso2 = 350;
 
   List<Notizia> notizie = [];
-  Notizia notizia;
+  Notizia notizia = new Notizia(0, '', '', '', '', '');
 
   Future richiestaMeteo() async {
     final response = await http.get(Uri.parse(
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
 
   Future _richiestaNotizie() async {
-    final data = await http.get(Uri.parse("https://8b73-78-14-16-126.ngrok.io/"));
+    final data = await http.get(Uri.parse("https://782a-84-221-62-187.ngrok.io"));
 
     var jsonData = json.decode(data.body);
 
@@ -83,11 +83,12 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('PnBacheca',
-                    style: TextStyle(
-                        fontFamily: 'Cocogoose Pro',
-                        fontSize: 35,
-                        color: Color(0xffE3131E)
+                child: Text(
+                    'PnBacheca',
+                    style: GoogleFonts.poppins(
+                      fontSize: 35,
+                      color: Color(0xffE3131E),
+                      fontWeight: FontWeight.bold
                     )
                 ),
               ),

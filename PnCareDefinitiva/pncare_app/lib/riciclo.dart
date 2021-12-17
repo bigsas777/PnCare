@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 class RiciclabolarioPage extends StatefulWidget {
@@ -45,13 +46,15 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
             padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Text('PnRiciclo',
-                  style: TextStyle(
-                      fontFamily: 'Cocogoose Pro',
-                      // fontWeight: FontWeight.bold,
+              child: Text(
+                'PnRiciclo',
+                  style: GoogleFonts.poppins(
                       fontSize: 35,
-                      color: Color(0xffE3131E))),
-            ),
+                      color: Color(0xffE3131E),
+                      fontWeight: FontWeight.bold
+                  )
+              )
+            )
           ),
           // Barra di ricerca
           Padding(
@@ -59,10 +62,15 @@ class _RiciclabolarioPageState extends State<RiciclabolarioPage> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  labelText: 'Cerca un rifiuto',
-                  prefixIcon: Icon(Icons.search),
+                    prefixIcon: Icon(Icons.search),
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Cerca un rifiuto",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                    )
                 ),
-              )),
+              )
+          ),
           // Linea divisoria tra barra di ricerca e lista di rifiuti
           Padding(
             padding: EdgeInsets.only(top: 20),

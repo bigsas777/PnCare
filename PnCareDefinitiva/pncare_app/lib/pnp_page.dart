@@ -22,12 +22,13 @@ class _PnPPage extends State<PnPPage> {
             padding: EdgeInsets.fromLTRB(25, 25, 10, 0),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Text('PnRiscontri',
-                style: TextStyle(
-                    fontFamily: 'Cocogoose Pro',
-                    fontSize: 35,
-                    color: Color(0xffE3131E)
-                ),
+              child: Text(
+                  'PnRiscontri',
+                  style: GoogleFonts.poppins(
+                      fontSize: 35,
+                      color: Color(0xffE3131E),
+                      fontWeight: FontWeight.bold
+                  )
               ),
             ),
           ),
